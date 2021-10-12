@@ -1,0 +1,5 @@
+git clone https://github.com/Mariapaula1609/SemilleroTallerGit.git
+git status
+git add
+git commit -m  "Mi primera subida de archivo"
+git push
