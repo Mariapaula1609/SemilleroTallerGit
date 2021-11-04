@@ -29,6 +29,9 @@ public class ResultadoDTO implements Serializable {
 	 * @param exitoso
 	 * @param mensajeEjecucion
 	 */
+	public ResultadoDTO() {
+		
+	}
 	public ResultadoDTO(boolean exitoso, String mensajeEjecucion) {
 		super();
 		this.exitoso = exitoso;

@@ -48,7 +48,7 @@ public class Comic implements Serializable {
 	private Boolean color;
 	private LocalDate fechaVenta;
 	private EstadoEnum estadoEnum;
-	private Long cantidad;
+	private Integer cantidad;
 
 	/**
 	 * Constructor de la clase.
@@ -277,7 +277,7 @@ public class Comic implements Serializable {
 	 * @return El cantidad asociado a la clase
 	 */
 	@Column(name = "SCCANTIDAD")
-	public Long getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 
@@ -286,7 +286,7 @@ public class Comic implements Serializable {
 	 * 
 	 * @param cantidad El nuevo cantidad a modificar.
 	 */
-	public void setCantidad(Long cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 
