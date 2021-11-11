@@ -16,11 +16,15 @@ public interface IGestionarComicLocal {
 
 	public ComicDTO crearComic(ComicDTO comicDTO) throws Exception;
 	
-	public ResultadoDTO actualizarComic(Long idComic, String Nombre);
+	public ResultadoDTO actualizarComic(ComicDTO comicDTO);
 	
 	public ResultadoDTO eliminarComic(Long idComic);
 	
 	public List<ComicDTO> consultarComics();
+	
+	public ComicDTO consultarComic(Long idComic);
+	
+	public ComicDTO consultarPorNombre(String nombre);
 	
 	public ConsultarComicTamanioNombreDTO consultarComicTamanioNombre(Short lengthComic);
 }

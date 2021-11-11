@@ -46,26 +46,20 @@ public class GestionarComicRest {
 	} 
 	
 	@POST
-	@Path("/actualizarNombreComic")
+	@Path("/actualizarComic")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ResultadoDTO actualizarNombreComic(@QueryParam("idComic") Long idComic,
-										  @QueryParam("nombreNuevo") String nombreComic) {
-		ResultadoDTO comicDTOResult = new ResultadoDTO();
-		try {
-			comicDTOResult = this.gestionarComicLocal.actualizarComic(idComic,nombreComic);
-		}  catch (Exception e) {
-			comicDTOResult.setExitoso(false);
-			comicDTOResult.setMensajeEjecucion("Se ha presentado un error tecnico, causa: " + e.getMessage());
-		}
-		return comicDTOResult;
+	public ResultadoDTO actualizarComic(ComicDTO comicDTO) {
+		 
+		return this.gestionarComicLocal.actualizarComic(comicDTO);
+		
 	} 
 	
 	@POST
 	@Path("/eliminarComic")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ResultadoDTO eliminarComic(@QueryParam("idComic") Long idComic) {
+	public ResultadoDTO eliminarComic(Long idComic) {
 		ResultadoDTO resultado = new ResultadoDTO();
 		try {
 			this.gestionarComicLocal.eliminarComic(idComic);
@@ -85,6 +79,8 @@ public class GestionarComicRest {
 		return this.gestionarComicLocal.consultarComics();
 	}
 	
+	
+	
 	@GET
 	@Path("/consultarComicTamanioNombre")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -92,4 +88,17 @@ public class GestionarComicRest {
 		return this.gestionarComicLocal.consultarComicTamanioNombre(lengthComic);
 	}
 	
+	@GET
+	@Path("/consultarComic")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ComicDTO consultarComic(@QueryParam("idComic") Long idComic) {
+		return this.gestionarComicLocal.consultarComic(idComic);
+	}
+	
+	@GET
+	@Path("/consultarComicNombre")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ComicDTO consultarComicNombre(@QueryParam("nombre") String nombre) {
+		return this.gestionarComicLocal.consultarPorNombre(nombre);
+	}
 }

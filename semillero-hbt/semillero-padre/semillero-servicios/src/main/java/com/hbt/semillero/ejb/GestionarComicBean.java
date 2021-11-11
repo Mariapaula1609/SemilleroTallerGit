@@ -34,6 +34,7 @@ public class GestionarComicBean implements IGestionarComicLocal {
 		ConsultaNombrePrecioComicDTO consultaNombrePrecioDTO = new ConsultaNombrePrecioComicDTO();
 		try {
 			Query consultaNativa = em.createQuery(consulta);
+			
 			consultaNativa.setParameter("idComic", idComic);
 			consultaNombrePrecioDTO = (ConsultaNombrePrecioComicDTO) consultaNativa.getSingleResult();
 			consultaNombrePrecioDTO.setExitoso(true);
@@ -65,8 +66,35 @@ public class GestionarComicBean implements IGestionarComicLocal {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public ResultadoDTO actualizarComic(Long idComic,String nombre) {
-	 return null;
+	public ResultadoDTO actualizarComic(ComicDTO comicDto) {
+	  String consulta = "SELECT cm from Comic cm WHERE cm.id = :idComic ";
+	  Comic comic = new Comic();
+	  ResultadoDTO resultado = new ResultadoDTO();
+	  try {
+		  Query consultaNativa = em.createQuery(consulta);
+		  consultaNativa.setParameter("idComic", comicDto.getId());
+		  comic = (Comic) consultaNativa.getSingleResult();
+		  comic.setNombre(comicDto.getNombre());
+		  comic.setAutores(comicDto.getAutores());
+		  comic.setCantidad(comicDto.getCantidad());
+		  comic.setColeccion(comicDto.getColeccion());
+		  comic.setColor(comicDto.getColor());
+		  comic.setPrecio(comicDto.getPrecio());
+		  comic.setEditorial(comicDto.getEditorial());
+		  comic.setEstadoEnum(comicDto.getEstadoEnum());
+		  comic.setNumeroPaginas(comicDto.getNumeroPaginas());
+		  comic.setFechaVenta(comicDto.getFechaVenta());
+		  comic.setTematicaEnum(comicDto.getTematicaEnum());
+		  em.merge(comic);
+		  resultado.setExitoso(true);
+		  resultado.setMensajeEjecucion("El comic"+comic.getId() + "fue actualizado");
+		  return resultado;
+		  
+		} catch (Exception e) {
+			 resultado.setExitoso(false);
+			 resultado.setMensajeEjecucion("El comic"+comic.getId() + " no fue actualizado");
+			 return resultado;
+		}
 	}
 
 	@Override
@@ -89,16 +117,27 @@ public class GestionarComicBean implements IGestionarComicLocal {
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public List<ComicDTO> consultarComics() {
 		String findAllComic = " SELECT cm FROM Comic cm ";
+		List<ComicDTO> comicsDto = new ArrayList<ComicDTO>();
 		try {
 			Query queryFindAllComic = em.createQuery(findAllComic);
-			List<ComicDTO> listaComics = queryFindAllComic.getResultList();
+			List<Comic> listaComics = queryFindAllComic.getResultList();
 			if(listaComics.isEmpty()) {
 				throw new Exception("No hay comics");
-			}else {
-				return listaComics;
 			}
+			else {
+				for (int i = 0; i < listaComics.size(); i++) {
+					comicsDto.add(convertirComicToComicDTO(listaComics.get(i)));
+					comicsDto.get(i).setExitoso(true);
+					comicsDto.get(i).setMensajeEjecucion("consulta exitoso");
+				}
+				return comicsDto;
+			}
+			
+			
 		} catch (Exception e) {
-			System.out.println("No hay comics");
+			comicsDto.get(0).setExitoso(false);
+			comicsDto.get(0).setMensajeEjecucion("Error en la consulta ");
+			
 		}
 		return null;
 	}
@@ -163,6 +202,51 @@ public class GestionarComicBean implements IGestionarComicLocal {
 			// TODO: handle exception
 		}
 		return null;
+	}
+
+	@Override
+	public ComicDTO consultarComic(Long idComic) {
+		System.out.println(idComic);
+		String consulta = "SELECT cm from Comic cm WHERE cm.id = :idComic ";
+		 Comic comic = new Comic();
+		 ComicDTO comicDTO = new ComicDTO();
+		 try {
+			 Query consultaNativa = em.createQuery(consulta);
+			 consultaNativa.setParameter("idComic", idComic);
+			 comic = (Comic) consultaNativa.getSingleResult();
+			 comicDTO= convertirComicToComicDTO(comic);
+			 comicDTO.setExitoso(true);
+			 comicDTO.setMensajeEjecucion("El comic consultado correctamente");
+			 System.out.println(comicDTO);
+			 return comicDTO;
+		} catch (Exception e) {
+			// TODO: handle exception
+			 comicDTO.setExitoso(false);
+			 comicDTO.setMensajeEjecucion("El comic no se ha consultado correctamente");
+		}
+		return comicDTO;
+	}
+
+	@Override
+	public ComicDTO consultarPorNombre(String nombre) {
+		// TODO Auto-generated method stub
+		String consulta = "SELECT cm from Comic cm WHERE cm.nombre = :nombre ";
+		 Comic comic = new Comic();
+		 ComicDTO comicDTO = new ComicDTO();
+		 try {
+			 Query consultaNativa = em.createQuery(consulta);
+			 consultaNativa.setParameter("nombre", nombre);
+			 comic = (Comic) consultaNativa.getSingleResult();
+			 comicDTO= convertirComicToComicDTO(comic);
+			 comicDTO.setExitoso(true);
+			 comicDTO.setMensajeEjecucion("El comic consultado correctamente");
+			 return comicDTO;
+		} catch (Exception e) {
+			// TODO: handle exception
+			 comicDTO.setExitoso(false);
+			 comicDTO.setMensajeEjecucion("El comic no se ha consultado correctamente");
+		}
+		return comicDTO;
 	}
 	
 	

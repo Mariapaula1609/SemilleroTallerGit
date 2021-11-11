@@ -1,0 +1,16 @@
+<div  class="container">
+    <form [formGroup]="gestionarComicForm">
+        <h1>Gestionar Comic</h1>
+        <hr>  
+        <div class="row">
+            <div class="col-6">
+                <input type="number" name="cantidad" id="cantidad" formControlName="cantidad">
+            </div>
+            <div class="col-6 text-right">
+                
+                <button type="button" class="btn btn-primary" (click)="comprarComic()">Comprar</button>
+                <button type="button" class="btn btn-primary" (click)="cerrar()">/Cerrar</button>
+            </div>
+        </div> 
+    </form>
+</div>

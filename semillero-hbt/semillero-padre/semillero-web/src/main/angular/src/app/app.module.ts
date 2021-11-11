@@ -10,6 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './semillero/componentes/menu/menu-component';
 import { BienvenidaComponent } from './semillero/componentes/home/bienvenida-component';
+import { GestionarComicComponent } from './semillero/componentes/gestionarComic/gestionar-comic/gestionar-comic.component';
+import { GestionComicActualizarComponent } from './semillero/componentes/gestion-comic-actualizar/gestion-comic-actualizar.component';
+import { BuscarComicComponent } from './semillero/componentes/buscar-comic/buscar-comic.component';
+import { ComprarComicComponent } from './semillero/componentes/comprar-comic/comprar-comic.component';
 //import { GestionarComicComponent } from './semillero/componentes/gestionarComic/gestionar-comic';
 
 // DTOs
@@ -21,6 +25,10 @@ import { BienvenidaComponent } from './semillero/componentes/home/bienvenida-com
     AppComponent,
     MenuComponent,
     BienvenidaComponent,
+    GestionarComicComponent,
+    GestionComicActualizarComponent,
+    BuscarComicComponent,
+    ComprarComicComponent,
   ],
   imports: [
     BrowserModule,
